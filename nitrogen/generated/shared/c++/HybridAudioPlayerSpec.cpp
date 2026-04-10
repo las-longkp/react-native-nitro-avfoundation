@@ -17,10 +17,14 @@ namespace margelo::nitro::nitroavfoundation {
       prototype.registerHybridGetter("isPlaying", &HybridAudioPlayerSpec::getIsPlaying);
       prototype.registerHybridGetter("volume", &HybridAudioPlayerSpec::getVolume);
       prototype.registerHybridSetter("volume", &HybridAudioPlayerSpec::setVolume);
+      prototype.registerHybridGetter("duration", &HybridAudioPlayerSpec::getDuration);
+      prototype.registerHybridGetter("currentTime", &HybridAudioPlayerSpec::getCurrentTime);
       prototype.registerHybridMethod("load", &HybridAudioPlayerSpec::load);
       prototype.registerHybridMethod("play", &HybridAudioPlayerSpec::play);
       prototype.registerHybridMethod("pause", &HybridAudioPlayerSpec::pause);
       prototype.registerHybridMethod("stop", &HybridAudioPlayerSpec::stop);
+      prototype.registerHybridMethod("seek", &HybridAudioPlayerSpec::seek);
+      prototype.registerHybridMethod("skip", &HybridAudioPlayerSpec::skip);
     });
   }
 

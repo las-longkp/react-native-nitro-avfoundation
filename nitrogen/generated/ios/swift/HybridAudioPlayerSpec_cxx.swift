@@ -138,6 +138,20 @@ open class HybridAudioPlayerSpec_cxx {
       self.__implementation.volume = newValue
     }
   }
+  
+  public final var duration: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.duration
+    }
+  }
+  
+  public final var currentTime: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.currentTime
+    }
+  }
 
   // Methods
   @inline(__always)
@@ -177,6 +191,28 @@ open class HybridAudioPlayerSpec_cxx {
   public final func stop() -> bridge.Result_void_ {
     do {
       try self.__implementation.stop()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func seek(seconds: Double) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.seek(seconds: seconds)
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func skip(seconds: Double) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.skip(seconds: seconds)
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

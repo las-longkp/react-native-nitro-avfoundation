@@ -2,9 +2,9 @@
   "name": "react-native-nitro-avfoundation",
   "version": "0.0.1",
   "description": "react-native-nitro-avfoundation",
-  "main": "lib/index",
-  "module": "lib/index",
-  "types": "lib/index.d.ts",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
   "react-native": "src/index",
   "source": "src/index",
   "files": [

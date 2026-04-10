@@ -71,6 +71,12 @@ namespace margelo::nitro::nitroavfoundation {
     inline void setVolume(double volume) noexcept override {
       _swiftPart.setVolume(std::forward<decltype(volume)>(volume));
     }
+    inline double getDuration() noexcept override {
+      return _swiftPart.getDuration();
+    }
+    inline double getCurrentTime() noexcept override {
+      return _swiftPart.getCurrentTime();
+    }
 
   public:
     // Methods
@@ -94,6 +100,18 @@ namespace margelo::nitro::nitroavfoundation {
     }
     inline void stop() override {
       auto __result = _swiftPart.stop();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void seek(double seconds) override {
+      auto __result = _swiftPart.seek(std::forward<decltype(seconds)>(seconds));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void skip(double seconds) override {
+      auto __result = _swiftPart.skip(std::forward<decltype(seconds)>(seconds));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

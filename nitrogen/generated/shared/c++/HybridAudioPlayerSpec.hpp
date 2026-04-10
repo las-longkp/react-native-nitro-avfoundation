@@ -47,6 +47,8 @@ namespace margelo::nitro::nitroavfoundation {
       virtual bool getIsPlaying() = 0;
       virtual double getVolume() = 0;
       virtual void setVolume(double volume) = 0;
+      virtual double getDuration() = 0;
+      virtual double getCurrentTime() = 0;
 
     public:
       // Methods
@@ -54,6 +56,8 @@ namespace margelo::nitro::nitroavfoundation {
       virtual void play() = 0;
       virtual void pause() = 0;
       virtual void stop() = 0;
+      virtual void seek(double seconds) = 0;
+      virtual void skip(double seconds) = 0;
 
     protected:
       // Hybrid Setup
