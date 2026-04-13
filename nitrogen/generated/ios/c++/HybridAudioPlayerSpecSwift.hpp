@@ -12,9 +12,12 @@
 // Forward declaration of `HybridAudioPlayerSpec_cxx` to properly resolve imports.
 namespace NitroAvfoundation { class HybridAudioPlayerSpec_cxx; }
 
-
+// Forward declaration of `Track` to properly resolve imports.
+namespace margelo::nitro::nitroavfoundation { struct Track; }
 
 #include <string>
+#include "Track.hpp"
+#include <vector>
 
 #include "NitroAvfoundation-Swift-Cxx-Umbrella.hpp"
 
@@ -65,23 +68,33 @@ namespace margelo::nitro::nitroavfoundation {
     inline bool getIsPlaying() noexcept override {
       return _swiftPart.isPlaying();
     }
-    inline double getVolume() noexcept override {
-      return _swiftPart.getVolume();
-    }
-    inline void setVolume(double volume) noexcept override {
-      _swiftPart.setVolume(std::forward<decltype(volume)>(volume));
-    }
     inline double getDuration() noexcept override {
       return _swiftPart.getDuration();
     }
     inline double getCurrentTime() noexcept override {
       return _swiftPart.getCurrentTime();
     }
+    inline std::string getCurrentTrackId() noexcept override {
+      auto __result = _swiftPart.getCurrentTrackId();
+      return __result;
+    }
 
   public:
     // Methods
-    inline void load(const std::string& url) override {
-      auto __result = _swiftPart.load(url);
+    inline void setPlaylist(const std::vector<Track>& tracks, double index) override {
+      auto __result = _swiftPart.setPlaylist(tracks, std::forward<decltype(index)>(index));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void next() override {
+      auto __result = _swiftPart.next();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void previous() override {
+      auto __result = _swiftPart.previous();
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
@@ -110,8 +123,8 @@ namespace margelo::nitro::nitroavfoundation {
         std::rethrow_exception(__result.error());
       }
     }
-    inline void skip(double seconds) override {
-      auto __result = _swiftPart.skip(std::forward<decltype(seconds)>(seconds));
+    inline void updateTrackUrl(double index, const std::string& url) override {
+      auto __result = _swiftPart.updateTrackUrl(std::forward<decltype(index)>(index), url);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

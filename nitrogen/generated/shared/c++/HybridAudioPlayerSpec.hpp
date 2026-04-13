@@ -13,9 +13,12 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `Track` to properly resolve imports.
+namespace margelo::nitro::nitroavfoundation { struct Track; }
 
 #include <string>
+#include "Track.hpp"
+#include <vector>
 
 namespace margelo::nitro::nitroavfoundation {
 
@@ -45,19 +48,20 @@ namespace margelo::nitro::nitroavfoundation {
     public:
       // Properties
       virtual bool getIsPlaying() = 0;
-      virtual double getVolume() = 0;
-      virtual void setVolume(double volume) = 0;
       virtual double getDuration() = 0;
       virtual double getCurrentTime() = 0;
+      virtual std::string getCurrentTrackId() = 0;
 
     public:
       // Methods
-      virtual void load(const std::string& url) = 0;
+      virtual void setPlaylist(const std::vector<Track>& tracks, double index) = 0;
+      virtual void next() = 0;
+      virtual void previous() = 0;
       virtual void play() = 0;
       virtual void pause() = 0;
       virtual void stop() = 0;
       virtual void seek(double seconds) = 0;
-      virtual void skip(double seconds) = 0;
+      virtual void updateTrackUrl(double index, const std::string& url) = 0;
 
     protected:
       // Hybrid Setup

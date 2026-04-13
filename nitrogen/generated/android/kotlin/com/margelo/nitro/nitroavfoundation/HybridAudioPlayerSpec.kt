@@ -31,22 +31,28 @@ abstract class HybridAudioPlayerSpec: HybridObject() {
   
   @get:DoNotStrip
   @get:Keep
-  @set:DoNotStrip
-  @set:Keep
-  abstract var volume: Double
-  
-  @get:DoNotStrip
-  @get:Keep
   abstract val duration: Double
   
   @get:DoNotStrip
   @get:Keep
   abstract val currentTime: Double
+  
+  @get:DoNotStrip
+  @get:Keep
+  abstract val currentTrackId: String
 
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun load(url: String): Unit
+  abstract fun setPlaylist(tracks: Array<Track>, index: Double): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun next(): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun previous(): Unit
   
   @DoNotStrip
   @Keep
@@ -66,7 +72,7 @@ abstract class HybridAudioPlayerSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun skip(seconds: Double): Unit
+  abstract fun updateTrackUrl(index: Double, url: String): Unit
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {
