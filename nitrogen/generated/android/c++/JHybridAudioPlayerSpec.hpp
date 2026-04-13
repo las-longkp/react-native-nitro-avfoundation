@@ -51,20 +51,19 @@ namespace margelo::nitro::nitroavfoundation {
   public:
     // Properties
     bool getIsPlaying() override;
+    double getVolume() override;
+    void setVolume(double volume) override;
     double getDuration() override;
     double getCurrentTime() override;
-    std::string getCurrentTrackId() override;
 
   public:
     // Methods
-    void setPlaylist(const std::vector<Track>& tracks, double index) override;
-    void next() override;
-    void previous() override;
+    void load(const std::string& url) override;
     void play() override;
     void pause() override;
     void stop() override;
     void seek(double seconds) override;
-    void updateTrackUrl(double index, const std::string& url) override;
+    void skip(double seconds) override;
 
   private:
     jni::global_ref<JHybridAudioPlayerSpec::JavaPart> _javaPart;

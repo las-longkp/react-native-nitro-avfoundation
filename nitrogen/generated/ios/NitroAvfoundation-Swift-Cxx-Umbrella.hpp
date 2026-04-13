@@ -10,17 +10,13 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `HybridAudioPlayerSpec` to properly resolve imports.
 namespace margelo::nitro::nitroavfoundation { class HybridAudioPlayerSpec; }
-// Forward declaration of `Track` to properly resolve imports.
-namespace margelo::nitro::nitroavfoundation { struct Track; }
 
 // Include C++ defined types
 #include "HybridAudioPlayerSpec.hpp"
-#include "Track.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
 #include <string>
-#include <vector>
 
 // C++ helpers for Swift
 #include "NitroAvfoundation-Swift-Cxx-Bridge.hpp"

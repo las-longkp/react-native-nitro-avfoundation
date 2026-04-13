@@ -128,6 +128,17 @@ open class HybridAudioPlayerSpec_cxx {
     }
   }
   
+  public final var volume: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.volume
+    }
+    @inline(__always)
+    set {
+      self.__implementation.volume = newValue
+    }
+  }
+  
   public final var duration: Double {
     @inline(__always)
     get {
@@ -141,41 +152,12 @@ open class HybridAudioPlayerSpec_cxx {
       return self.__implementation.currentTime
     }
   }
-  
-  public final var currentTrackId: std.string {
-    @inline(__always)
-    get {
-      return std.string(self.__implementation.currentTrackId)
-    }
-  }
 
   // Methods
   @inline(__always)
-  public final func setPlaylist(tracks: bridge.std__vector_Track_, index: Double) -> bridge.Result_void_ {
+  public final func load(url: std.string) -> bridge.Result_void_ {
     do {
-      try self.__implementation.setPlaylist(tracks: tracks.map({ __item in __item }), index: index)
-      return bridge.create_Result_void_()
-    } catch (let __error) {
-      let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_void_(__exceptionPtr)
-    }
-  }
-  
-  @inline(__always)
-  public final func next() -> bridge.Result_void_ {
-    do {
-      try self.__implementation.next()
-      return bridge.create_Result_void_()
-    } catch (let __error) {
-      let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_void_(__exceptionPtr)
-    }
-  }
-  
-  @inline(__always)
-  public final func previous() -> bridge.Result_void_ {
-    do {
-      try self.__implementation.previous()
+      try self.__implementation.load(url: String(url))
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
@@ -228,9 +210,9 @@ open class HybridAudioPlayerSpec_cxx {
   }
   
   @inline(__always)
-  public final func updateTrackUrl(index: Double, url: std.string) -> bridge.Result_void_ {
+  public final func skip(seconds: Double) -> bridge.Result_void_ {
     do {
-      try self.__implementation.updateTrackUrl(index: index, url: String(url))
+      try self.__implementation.skip(seconds: seconds)
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

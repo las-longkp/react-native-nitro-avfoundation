@@ -15,17 +15,16 @@ namespace margelo::nitro::nitroavfoundation {
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridGetter("isPlaying", &HybridAudioPlayerSpec::getIsPlaying);
+      prototype.registerHybridGetter("volume", &HybridAudioPlayerSpec::getVolume);
+      prototype.registerHybridSetter("volume", &HybridAudioPlayerSpec::setVolume);
       prototype.registerHybridGetter("duration", &HybridAudioPlayerSpec::getDuration);
       prototype.registerHybridGetter("currentTime", &HybridAudioPlayerSpec::getCurrentTime);
-      prototype.registerHybridGetter("currentTrackId", &HybridAudioPlayerSpec::getCurrentTrackId);
-      prototype.registerHybridMethod("setPlaylist", &HybridAudioPlayerSpec::setPlaylist);
-      prototype.registerHybridMethod("next", &HybridAudioPlayerSpec::next);
-      prototype.registerHybridMethod("previous", &HybridAudioPlayerSpec::previous);
+      prototype.registerHybridMethod("load", &HybridAudioPlayerSpec::load);
       prototype.registerHybridMethod("play", &HybridAudioPlayerSpec::play);
       prototype.registerHybridMethod("pause", &HybridAudioPlayerSpec::pause);
       prototype.registerHybridMethod("stop", &HybridAudioPlayerSpec::stop);
       prototype.registerHybridMethod("seek", &HybridAudioPlayerSpec::seek);
-      prototype.registerHybridMethod("updateTrackUrl", &HybridAudioPlayerSpec::updateTrackUrl);
+      prototype.registerHybridMethod("skip", &HybridAudioPlayerSpec::skip);
     });
   }
 

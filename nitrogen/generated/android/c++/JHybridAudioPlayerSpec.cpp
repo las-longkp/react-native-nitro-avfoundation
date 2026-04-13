@@ -7,13 +7,9 @@
 
 #include "JHybridAudioPlayerSpec.hpp"
 
-// Forward declaration of `Track` to properly resolve imports.
-namespace margelo::nitro::nitroavfoundation { struct Track; }
+
 
 #include <string>
-#include "Track.hpp"
-#include <vector>
-#include "JTrack.hpp"
 
 namespace margelo::nitro::nitroavfoundation {
 
@@ -50,6 +46,15 @@ namespace margelo::nitro::nitroavfoundation {
     auto __result = method(_javaPart);
     return static_cast<bool>(__result);
   }
+  double JHybridAudioPlayerSpec::getVolume() {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<double()>("getVolume");
+    auto __result = method(_javaPart);
+    return __result;
+  }
+  void JHybridAudioPlayerSpec::setVolume(double volume) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* volume */)>("setVolume");
+    method(_javaPart, volume);
+  }
   double JHybridAudioPlayerSpec::getDuration() {
     static const auto method = _javaPart->javaClassStatic()->getMethod<double()>("getDuration");
     auto __result = method(_javaPart);
@@ -60,33 +65,11 @@ namespace margelo::nitro::nitroavfoundation {
     auto __result = method(_javaPart);
     return __result;
   }
-  std::string JHybridAudioPlayerSpec::getCurrentTrackId() {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getCurrentTrackId");
-    auto __result = method(_javaPart);
-    return __result->toStdString();
-  }
 
   // Methods
-  void JHybridAudioPlayerSpec::setPlaylist(const std::vector<Track>& tracks, double index) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JArrayClass<JTrack>> /* tracks */, double /* index */)>("setPlaylist");
-    method(_javaPart, [&]() {
-      size_t __size = tracks.size();
-      jni::local_ref<jni::JArrayClass<JTrack>> __array = jni::JArrayClass<JTrack>::newArray(__size);
-      for (size_t __i = 0; __i < __size; __i++) {
-        const auto& __element = tracks[__i];
-        auto __elementJni = JTrack::fromCpp(__element);
-        __array->setElement(__i, *__elementJni);
-      }
-      return __array;
-    }(), index);
-  }
-  void JHybridAudioPlayerSpec::next() {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void()>("next");
-    method(_javaPart);
-  }
-  void JHybridAudioPlayerSpec::previous() {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void()>("previous");
-    method(_javaPart);
+  void JHybridAudioPlayerSpec::load(const std::string& url) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* url */)>("load");
+    method(_javaPart, jni::make_jstring(url));
   }
   void JHybridAudioPlayerSpec::play() {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void()>("play");
@@ -104,9 +87,9 @@ namespace margelo::nitro::nitroavfoundation {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* seconds */)>("seek");
     method(_javaPart, seconds);
   }
-  void JHybridAudioPlayerSpec::updateTrackUrl(double index, const std::string& url) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* index */, jni::alias_ref<jni::JString> /* url */)>("updateTrackUrl");
-    method(_javaPart, index, jni::make_jstring(url));
+  void JHybridAudioPlayerSpec::skip(double seconds) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* seconds */)>("skip");
+    method(_javaPart, seconds);
   }
 
 } // namespace margelo::nitro::nitroavfoundation

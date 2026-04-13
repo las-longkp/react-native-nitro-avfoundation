@@ -10,8 +10,6 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `HybridAudioPlayerSpec` to properly resolve imports.
 namespace margelo::nitro::nitroavfoundation { class HybridAudioPlayerSpec; }
-// Forward declaration of `Track` to properly resolve imports.
-namespace margelo::nitro::nitroavfoundation { struct Track; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridAudioPlayerSpec_cxx` to properly resolve imports.
@@ -19,12 +17,9 @@ namespace NitroAvfoundation { class HybridAudioPlayerSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridAudioPlayerSpec.hpp"
-#include "Track.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
-#include <string>
-#include <vector>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -32,17 +27,6 @@ namespace NitroAvfoundation { class HybridAudioPlayerSpec_cxx; }
  */
 namespace margelo::nitro::nitroavfoundation::bridge::swift {
 
-  // pragma MARK: std::vector<Track>
-  /**
-   * Specialized version of `std::vector<Track>`.
-   */
-  using std__vector_Track_ = std::vector<Track>;
-  inline std::vector<Track> create_std__vector_Track_(size_t size) noexcept {
-    std::vector<Track> vector;
-    vector.reserve(size);
-    return vector;
-  }
-  
   // pragma MARK: std::shared_ptr<HybridAudioPlayerSpec>
   /**
    * Specialized version of `std::shared_ptr<HybridAudioPlayerSpec>`.
