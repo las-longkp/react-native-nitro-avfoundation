@@ -65,17 +65,23 @@ namespace margelo::nitro::nitroavfoundation {
     inline bool getIsPlaying() noexcept override {
       return _swiftPart.isPlaying();
     }
+    inline double getDuration() noexcept override {
+      return _swiftPart.getDuration();
+    }
+    inline double getCurrentTime() noexcept override {
+      return _swiftPart.getCurrentTime();
+    }
     inline double getVolume() noexcept override {
       return _swiftPart.getVolume();
     }
     inline void setVolume(double volume) noexcept override {
       _swiftPart.setVolume(std::forward<decltype(volume)>(volume));
     }
-    inline double getDuration() noexcept override {
-      return _swiftPart.getDuration();
+    inline double getPlaybackRate() noexcept override {
+      return _swiftPart.getPlaybackRate();
     }
-    inline double getCurrentTime() noexcept override {
-      return _swiftPart.getCurrentTime();
+    inline void setPlaybackRate(double playbackRate) noexcept override {
+      _swiftPart.setPlaybackRate(std::forward<decltype(playbackRate)>(playbackRate));
     }
 
   public:
@@ -104,6 +110,12 @@ namespace margelo::nitro::nitroavfoundation {
         std::rethrow_exception(__result.error());
       }
     }
+    inline void release() override {
+      auto __result = _swiftPart.release();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
     inline void seek(double seconds) override {
       auto __result = _swiftPart.seek(std::forward<decltype(seconds)>(seconds));
       if (__result.hasError()) [[unlikely]] {
@@ -112,6 +124,12 @@ namespace margelo::nitro::nitroavfoundation {
     }
     inline void skip(double seconds) override {
       auto __result = _swiftPart.skip(std::forward<decltype(seconds)>(seconds));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void render(double viewTag) override {
+      auto __result = _swiftPart.render(std::forward<decltype(viewTag)>(viewTag));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

@@ -11,17 +11,20 @@ import NitroModules
 public protocol HybridAudioPlayerSpec_protocol: HybridObject {
   // Properties
   var isPlaying: Bool { get }
-  var volume: Double { get set }
   var duration: Double { get }
   var currentTime: Double { get }
+  var volume: Double { get set }
+  var playbackRate: Double { get set }
 
   // Methods
   func load(url: String) throws -> Void
   func play() throws -> Void
   func pause() throws -> Void
   func stop() throws -> Void
+  func release() throws -> Void
   func seek(seconds: Double) throws -> Void
   func skip(seconds: Double) throws -> Void
+  func render(viewTag: Double) throws -> Void
 }
 
 public extension HybridAudioPlayerSpec_protocol {

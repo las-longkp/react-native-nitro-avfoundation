@@ -51,10 +51,12 @@ namespace margelo::nitro::nitroavfoundation {
   public:
     // Properties
     bool getIsPlaying() override;
-    double getVolume() override;
-    void setVolume(double volume) override;
     double getDuration() override;
     double getCurrentTime() override;
+    double getVolume() override;
+    void setVolume(double volume) override;
+    double getPlaybackRate() override;
+    void setPlaybackRate(double playbackRate) override;
 
   public:
     // Methods
@@ -62,8 +64,10 @@ namespace margelo::nitro::nitroavfoundation {
     void play() override;
     void pause() override;
     void stop() override;
+    void release() override;
     void seek(double seconds) override;
     void skip(double seconds) override;
+    void render(double viewTag) override;
 
   private:
     jni::global_ref<JHybridAudioPlayerSpec::JavaPart> _javaPart;

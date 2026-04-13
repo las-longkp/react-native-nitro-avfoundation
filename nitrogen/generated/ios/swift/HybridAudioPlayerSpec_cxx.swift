@@ -128,17 +128,6 @@ open class HybridAudioPlayerSpec_cxx {
     }
   }
   
-  public final var volume: Double {
-    @inline(__always)
-    get {
-      return self.__implementation.volume
-    }
-    @inline(__always)
-    set {
-      self.__implementation.volume = newValue
-    }
-  }
-  
   public final var duration: Double {
     @inline(__always)
     get {
@@ -150,6 +139,28 @@ open class HybridAudioPlayerSpec_cxx {
     @inline(__always)
     get {
       return self.__implementation.currentTime
+    }
+  }
+  
+  public final var volume: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.volume
+    }
+    @inline(__always)
+    set {
+      self.__implementation.volume = newValue
+    }
+  }
+  
+  public final var playbackRate: Double {
+    @inline(__always)
+    get {
+      return self.__implementation.playbackRate
+    }
+    @inline(__always)
+    set {
+      self.__implementation.playbackRate = newValue
     }
   }
 
@@ -199,6 +210,17 @@ open class HybridAudioPlayerSpec_cxx {
   }
   
   @inline(__always)
+  public final func release() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.release()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
   public final func seek(seconds: Double) -> bridge.Result_void_ {
     do {
       try self.__implementation.seek(seconds: seconds)
@@ -213,6 +235,17 @@ open class HybridAudioPlayerSpec_cxx {
   public final func skip(seconds: Double) -> bridge.Result_void_ {
     do {
       try self.__implementation.skip(seconds: seconds)
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func render(viewTag: Double) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.render(viewTag: viewTag)
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
