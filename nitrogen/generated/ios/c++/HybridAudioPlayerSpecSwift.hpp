@@ -83,6 +83,10 @@ namespace margelo::nitro::nitroavfoundation {
     inline void setPlaybackRate(double playbackRate) noexcept override {
       _swiftPart.setPlaybackRate(std::forward<decltype(playbackRate)>(playbackRate));
     }
+    inline std::string getIdentifier() noexcept override {
+      auto __result = _swiftPart.getIdentifier();
+      return __result;
+    }
 
   public:
     // Methods
@@ -124,12 +128,6 @@ namespace margelo::nitro::nitroavfoundation {
     }
     inline void skip(double seconds) override {
       auto __result = _swiftPart.skip(std::forward<decltype(seconds)>(seconds));
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-    }
-    inline void render(double viewTag) override {
-      auto __result = _swiftPart.render(std::forward<decltype(viewTag)>(viewTag));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

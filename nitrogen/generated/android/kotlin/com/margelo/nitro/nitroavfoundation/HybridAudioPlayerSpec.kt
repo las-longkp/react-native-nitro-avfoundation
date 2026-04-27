@@ -48,6 +48,10 @@ abstract class HybridAudioPlayerSpec: HybridObject() {
   @set:DoNotStrip
   @set:Keep
   abstract var playbackRate: Double
+  
+  @get:DoNotStrip
+  @get:Keep
+  abstract val identifier: String
 
   // Methods
   @DoNotStrip
@@ -77,10 +81,6 @@ abstract class HybridAudioPlayerSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun skip(seconds: Double): Unit
-  
-  @DoNotStrip
-  @Keep
-  abstract fun render(viewTag: Double): Unit
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {

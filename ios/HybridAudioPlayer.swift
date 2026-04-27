@@ -1,11 +1,23 @@
 import Foundation
 import AVFoundation
 import NitroModules
-import UIKit
 
 class HybridAudioPlayer: HybridAudioPlayerSpec {
-    private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer? 
+    // MARK: - Registry (Cực kỳ quan trọng)
+    // Lưu trữ các instance để Native Video View có thể truy vấn thông qua identifier
+    static var registry: [String: HybridAudioPlayer] = [:]
+    
+    // Identifier duy nhất cho mỗi instance
+    public let identifier: String = UUID().uuidString
+    
+    // Đổi thành public để Native View có thể truy cập AVPlayer
+    public var player: AVPlayer?
+
+    // MARK: - Init & Deinit
+    init() {
+        // Đăng ký instance này vào bộ nhớ tạm
+        Self.registry[identifier] = self
+    }
 
     // MARK: - Properties
     
@@ -18,7 +30,6 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
         set { player?.volume = Float(newValue) }
     }
     
-    // Thêm thuộc tính tốc độ phát
     var playbackRate: Double {
         get { return Double(player?.rate ?? 1.0) }
         set { player?.rate = Float(newValue) }
@@ -38,13 +49,13 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
 
     func load(url: String) throws {
         guard let urlObj = URL(string: url) else {
-            print("NitroAudio: Invalid URL string")
             return
         }
         
         let playerItem = AVPlayerItem(url: urlObj)
         
         if player == nil {
+            // Cấu hình Audio Session để có thể phát nhạc nền/chế độ im lặng
             let session = AVAudioSession.sharedInstance()
             try? session.setCategory(.playback, mode: .default)
             try? session.setActive(true)
@@ -52,11 +63,6 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
             player = AVPlayer(playerItem: playerItem)
         } else {
             player?.replaceCurrentItem(with: playerItem)
-        }
-        
-        // Cập nhật player cho layer nếu layer đã tồn tại từ trước (khi chuyển bài)
-        if let layer = playerLayer {
-            layer.player = player
         }
     }
 
@@ -73,14 +79,15 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
         player?.seek(to: .zero)
     }
     
-    // Giải phóng bộ nhớ khi đóng màn hình Player
     func release() throws {
-        DispatchQueue.main.async { [weak self] in
-            self?.player?.pause()
-            self?.playerLayer?.removeFromSuperlayer()
-            self?.playerLayer = nil
-            self?.player = nil
-        }
+        // 1. Dừng phát
+        player?.pause()
+        
+        // 2. Xóa khỏi Registry để tránh Memory Leak
+        Self.registry.removeValue(forKey: identifier)
+        
+        // 3. Giải phóng tài nguyên
+        player = nil
     }
 
     func seek(seconds: Double) throws {
@@ -93,34 +100,5 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
         let newTime = current + seconds
         let cmTime = CMTime(seconds: newTime, preferredTimescale: 600)
         player?.seek(to: cmTime, toleranceBefore: .zero, toleranceAfter: .zero)
-    }
-
-    // MARK: - Video Rendering
-
-    func render(viewTag: Double) throws {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            // Tìm view của React Native thông qua tag
-            guard let window = UIApplication.shared.windows.first,
-                  let targetView = window.viewWithTag(Int(viewTag)) else {
-                print("NitroAudio: Không tìm thấy View với tag \(viewTag)")
-                return
-            }
-
-            if self.playerLayer == nil {
-                self.playerLayer = AVPlayerLayer(player: self.player)
-            }
-            
-            // Cập nhật frame của layer theo bounds của view chứa
-            self.playerLayer?.frame = targetView.bounds
-            self.playerLayer?.videoGravity = .resizeAspect
-            
-            // Đảm bảo không add trùng layer
-            if self.playerLayer?.superlayer != targetView.layer {
-                targetView.layer.sublayers?.forEach { if $0 is AVPlayerLayer { $0.removeFromSuperlayer() } }
-                targetView.layer.addSublayer(self.playerLayer!)
-            }
-        }
     }
 }

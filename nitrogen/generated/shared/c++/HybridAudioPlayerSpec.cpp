@@ -21,6 +21,7 @@ namespace margelo::nitro::nitroavfoundation {
       prototype.registerHybridSetter("volume", &HybridAudioPlayerSpec::setVolume);
       prototype.registerHybridGetter("playbackRate", &HybridAudioPlayerSpec::getPlaybackRate);
       prototype.registerHybridSetter("playbackRate", &HybridAudioPlayerSpec::setPlaybackRate);
+      prototype.registerHybridGetter("identifier", &HybridAudioPlayerSpec::getIdentifier);
       prototype.registerHybridMethod("load", &HybridAudioPlayerSpec::load);
       prototype.registerHybridMethod("play", &HybridAudioPlayerSpec::play);
       prototype.registerHybridMethod("pause", &HybridAudioPlayerSpec::pause);
@@ -28,7 +29,6 @@ namespace margelo::nitro::nitroavfoundation {
       prototype.registerHybridMethod("release", &HybridAudioPlayerSpec::release);
       prototype.registerHybridMethod("seek", &HybridAudioPlayerSpec::seek);
       prototype.registerHybridMethod("skip", &HybridAudioPlayerSpec::skip);
-      prototype.registerHybridMethod("render", &HybridAudioPlayerSpec::render);
     });
   }
 

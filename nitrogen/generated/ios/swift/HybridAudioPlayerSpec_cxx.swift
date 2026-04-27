@@ -163,6 +163,13 @@ open class HybridAudioPlayerSpec_cxx {
       self.__implementation.playbackRate = newValue
     }
   }
+  
+  public final var identifier: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.identifier)
+    }
+  }
 
   // Methods
   @inline(__always)
@@ -235,17 +242,6 @@ open class HybridAudioPlayerSpec_cxx {
   public final func skip(seconds: Double) -> bridge.Result_void_ {
     do {
       try self.__implementation.skip(seconds: seconds)
-      return bridge.create_Result_void_()
-    } catch (let __error) {
-      let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_void_(__exceptionPtr)
-    }
-  }
-  
-  @inline(__always)
-  public final func render(viewTag: Double) -> bridge.Result_void_ {
-    do {
-      try self.__implementation.render(viewTag: viewTag)
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

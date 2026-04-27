@@ -51,6 +51,7 @@ namespace margelo::nitro::nitroavfoundation {
       virtual void setVolume(double volume) = 0;
       virtual double getPlaybackRate() = 0;
       virtual void setPlaybackRate(double playbackRate) = 0;
+      virtual std::string getIdentifier() = 0;
 
     public:
       // Methods
@@ -61,7 +62,6 @@ namespace margelo::nitro::nitroavfoundation {
       virtual void release() = 0;
       virtual void seek(double seconds) = 0;
       virtual void skip(double seconds) = 0;
-      virtual void render(double viewTag) = 0;
 
     protected:
       // Hybrid Setup

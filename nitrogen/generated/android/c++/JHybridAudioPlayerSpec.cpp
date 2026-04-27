@@ -74,6 +74,11 @@ namespace margelo::nitro::nitroavfoundation {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* playbackRate */)>("setPlaybackRate");
     method(_javaPart, playbackRate);
   }
+  std::string JHybridAudioPlayerSpec::getIdentifier() {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getIdentifier");
+    auto __result = method(_javaPart);
+    return __result->toStdString();
+  }
 
   // Methods
   void JHybridAudioPlayerSpec::load(const std::string& url) {
@@ -103,10 +108,6 @@ namespace margelo::nitro::nitroavfoundation {
   void JHybridAudioPlayerSpec::skip(double seconds) {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* seconds */)>("skip");
     method(_javaPart, seconds);
-  }
-  void JHybridAudioPlayerSpec::render(double viewTag) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* viewTag */)>("render");
-    method(_javaPart, viewTag);
   }
 
 } // namespace margelo::nitro::nitroavfoundation

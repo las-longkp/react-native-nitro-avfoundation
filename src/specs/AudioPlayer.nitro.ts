@@ -4,29 +4,42 @@ export interface AudioPlayer extends HybridObject<{
   ios: 'swift'
   android: 'kotlin'
 }> {
-  // Điều khiển phát
+  // --- Điều khiển phát ---
   load(url: string): void
   play(): void
   pause(): void
   stop(): void
-  release(): void // Giải phóng tài nguyên
 
-  // Trạng thái (Readonly)
+  /**
+   * Giải phóng hoàn toàn tài nguyên player và gỡ bỏ khỏi Registry ở Native.
+   * Cần gọi khi component unmount.
+   */
+  release(): void
+
+  // --- Trạng thái (Readonly) ---
   readonly isPlaying: boolean
   readonly duration: number
   readonly currentTime: number
 
-  // Cấu hình
-  volume: number // 0.0 đến 1.0
-  playbackRate: number // Tốc độ phát (mặc định 1.0)
+  // --- Cấu hình ---
+  /**
+   * Âm lượng từ 0.0 đến 1.0
+   */
+  volume: number
 
-  // Điều hướng thời gian
+  /**
+   * Tốc độ phát (mặc định 1.0)
+   */
+  playbackRate: number
+
+  // --- Điều hướng thời gian ---
   seek(seconds: number): void
   skip(seconds: number): void
 
-  // Video Rendering
+  // --- Video Rendering (New Architecture) ---
   /**
-   * @param viewTag ID của View lấy từ findNodeHandle
+   * Identifier duy nhất của instance player này.
+   * Dùng để truyền vào prop của Native Video View giúp kết nối mà không cần viewTag.
    */
-  render(viewTag: number): void
+  readonly identifier: string
 }

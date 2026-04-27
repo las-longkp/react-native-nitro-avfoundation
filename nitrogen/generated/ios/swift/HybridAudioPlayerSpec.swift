@@ -15,6 +15,7 @@ public protocol HybridAudioPlayerSpec_protocol: HybridObject {
   var currentTime: Double { get }
   var volume: Double { get set }
   var playbackRate: Double { get set }
+  var identifier: String { get }
 
   // Methods
   func load(url: String) throws -> Void
@@ -24,7 +25,6 @@ public protocol HybridAudioPlayerSpec_protocol: HybridObject {
   func release() throws -> Void
   func seek(seconds: Double) throws -> Void
   func skip(seconds: Double) throws -> Void
-  func render(viewTag: Double) throws -> Void
 }
 
 public extension HybridAudioPlayerSpec_protocol {

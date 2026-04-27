@@ -57,6 +57,7 @@ namespace margelo::nitro::nitroavfoundation {
     void setVolume(double volume) override;
     double getPlaybackRate() override;
     void setPlaybackRate(double playbackRate) override;
+    std::string getIdentifier() override;
 
   public:
     // Methods
@@ -67,7 +68,6 @@ namespace margelo::nitro::nitroavfoundation {
     void release() override;
     void seek(double seconds) override;
     void skip(double seconds) override;
-    void render(double viewTag) override;
 
   private:
     jni::global_ref<JHybridAudioPlayerSpec::JavaPart> _javaPart;
