@@ -68,6 +68,7 @@ namespace margelo::nitro::nitroavfoundation {
     void seek(double seconds) override;
     void skip(double seconds) override;
     void render(double viewTag) override;
+    void unrender() override;
 
   private:
     jni::global_ref<JHybridAudioPlayerSpec::JavaPart> _javaPart;

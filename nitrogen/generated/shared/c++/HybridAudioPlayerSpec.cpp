@@ -29,6 +29,7 @@ namespace margelo::nitro::nitroavfoundation {
       prototype.registerHybridMethod("seek", &HybridAudioPlayerSpec::seek);
       prototype.registerHybridMethod("skip", &HybridAudioPlayerSpec::skip);
       prototype.registerHybridMethod("render", &HybridAudioPlayerSpec::render);
+      prototype.registerHybridMethod("unrender", &HybridAudioPlayerSpec::unrender);
     });
   }
 

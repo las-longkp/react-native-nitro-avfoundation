@@ -25,6 +25,7 @@ public protocol HybridAudioPlayerSpec_protocol: HybridObject {
   func seek(seconds: Double) throws -> Void
   func skip(seconds: Double) throws -> Void
   func render(viewTag: Double) throws -> Void
+  func unrender() throws -> Void
 }
 
 public extension HybridAudioPlayerSpec_protocol {

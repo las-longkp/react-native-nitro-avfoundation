@@ -18,7 +18,6 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
         set { player?.volume = Float(newValue) }
     }
     
-    // Thêm thuộc tính tốc độ phát
     var playbackRate: Double {
         get { return Double(player?.rate ?? 1.0) }
         set { player?.rate = Float(newValue) }
@@ -54,7 +53,6 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
             player?.replaceCurrentItem(with: playerItem)
         }
         
-        // Cập nhật player cho layer nếu layer đã tồn tại từ trước (khi chuyển bài)
         if let layer = playerLayer {
             layer.player = player
         }
@@ -73,7 +71,6 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
         player?.seek(to: .zero)
     }
     
-    // Giải phóng bộ nhớ khi đóng màn hình Player
     func release() throws {
         DispatchQueue.main.async { [weak self] in
             self?.player?.pause()
@@ -95,16 +92,14 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
         player?.seek(to: cmTime, toleranceBefore: .zero, toleranceAfter: .zero)
     }
 
-    // MARK: - Video Rendering
 
     func render(viewTag: Double) throws {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            // Tìm view của React Native thông qua tag
             guard let window = UIApplication.shared.windows.first,
                   let targetView = window.viewWithTag(Int(viewTag)) else {
-                print("NitroAudio: Không tìm thấy View với tag \(viewTag)")
+                print("NitroAudio: No view tag \(viewTag)")
                 return
             }
 
@@ -112,15 +107,27 @@ class HybridAudioPlayer: HybridAudioPlayerSpec {
                 self.playerLayer = AVPlayerLayer(player: self.player)
             }
             
-            // Cập nhật frame của layer theo bounds của view chứa
             self.playerLayer?.frame = targetView.bounds
             self.playerLayer?.videoGravity = .resizeAspect
             
-            // Đảm bảo không add trùng layer
             if self.playerLayer?.superlayer != targetView.layer {
                 targetView.layer.sublayers?.forEach { if $0 is AVPlayerLayer { $0.removeFromSuperlayer() } }
                 targetView.layer.addSublayer(self.playerLayer!)
             }
+        }
+    }
+
+    func unrender() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.playerLayer?.removeFromSuperlayer()
+            
+            self.playerLayer?.player = nil
+            
+            self.playerLayer = nil
+            
+            print("NitroAudio: unrender Video Layer")
         }
     }
 }

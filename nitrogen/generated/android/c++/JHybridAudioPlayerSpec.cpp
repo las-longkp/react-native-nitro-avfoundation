@@ -108,5 +108,9 @@ namespace margelo::nitro::nitroavfoundation {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(double /* viewTag */)>("render");
     method(_javaPart, viewTag);
   }
+  void JHybridAudioPlayerSpec::unrender() {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void()>("unrender");
+    method(_javaPart);
+  }
 
 } // namespace margelo::nitro::nitroavfoundation

@@ -81,6 +81,10 @@ abstract class HybridAudioPlayerSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun render(viewTag: Double): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun unrender(): Unit
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {

@@ -134,6 +134,12 @@ namespace margelo::nitro::nitroavfoundation {
         std::rethrow_exception(__result.error());
       }
     }
+    inline void unrender() override {
+      auto __result = _swiftPart.unrender();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
 
   private:
     NitroAvfoundation::HybridAudioPlayerSpec_cxx _swiftPart;

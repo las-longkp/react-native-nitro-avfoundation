@@ -62,6 +62,7 @@ namespace margelo::nitro::nitroavfoundation {
       virtual void seek(double seconds) = 0;
       virtual void skip(double seconds) = 0;
       virtual void render(double viewTag) = 0;
+      virtual void unrender() = 0;
 
     protected:
       // Hybrid Setup
